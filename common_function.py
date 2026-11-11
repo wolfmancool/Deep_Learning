@@ -317,7 +317,7 @@ def calculation_graph(loss, net):
 
     ## 손실 그래프 저장
     # 현재 작업 디렉토리 경로
-    base_path = Path.cwd()
+    base_path = _message.blocking_request('get_ipynb', request='', timeout_sec=5)
 
     # 이미지 저장 폴더 경로
     save_path = base_path / 'calculation_graph'
