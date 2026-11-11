@@ -148,7 +148,7 @@ def fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device
 
 ## 학습곡선 출력함수 (evaluate_history)
 # 기능 : history를 이용해 학습곡선(손실, 정확도) 출력 및 저장
-def evaluate_history(history):
+def evaluate_history(history, base_path):
     ## 손실과 정확도 확인
     print(f'초기상태 => 검증손실 : {history[0, 3]:.5f} 검증정확도 : {history[0, 4]:.5f}')
     print(f'최종상태 => 검증손실 : {history[-1, 3]:.5f} 검증정확도 : {history[-1, 4]:.5f}')
@@ -176,9 +176,6 @@ def evaluate_history(history):
     plt.grid(True)
 
     ## 이미지 파일을 드라이브에 저장
-    # 현재 작업 디렉토리 경로
-    base_path = Path.cwd()
-
     # 이미지 저장 폴더 경로
     save_path = base_path / 'learning_curve'
 
@@ -310,15 +307,12 @@ def torch_seed(seed=123):
 
 ## 손실 계산 그래프 시각화 함수 (calculation_graph)
 # 기능 : 계산 그래프를 시각화 및 저장
-def calculation_graph(loss, net):
+def calculation_graph(loss, net, base_path):
     ## 손실 그래프 출력
     g = make_dot(loss, params=dict(net.named_parameters()))
     display(g)
 
     ## 손실 그래프 저장
-    # 현재 작업 디렉토리 경로
-    base_path = _message.blocking_request('get_ipynb', request='', timeout_sec=5)
-
     # 이미지 저장 폴더 경로
     save_path = base_path / 'calculation_graph'
 
