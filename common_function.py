@@ -40,9 +40,9 @@ def eval_loss(loader, device, net, criterion):
     return loss
 
 
-## 학습함수 (fit) 정의 => history저장 + 학습된 parameter저장
-# 기능 : 학습 + 검증 + epoch에 대한 훈련, 검증의 손실, 정확도 출력 + history기록 + history저장 + 학습된 parameter저장
-def fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device, history, base_path):
+## 학습함수 (fit) 정의
+# 기능 : 학습 + 검증 + epoch에 대한 훈련, 검증의 손실, 정확도 출력 + history기록
+def fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device, history):    
     ## 학습 시작 시점의 epoch (∵ 추가학습의 경우를 위해)
     base_epochs = len(history)
 
@@ -306,6 +306,7 @@ def torch_seed(seed=123):
     torch.backends.cudnn.deterministic = True
     torch.use_deterministic_algorithms = True
 
+
 ## 손실 계산 그래프 시각화 함수 (calculation_graph)
 # 기능 : 계산 그래프를 시각화 및 저장
 def calculation_graph(loss, net, base_path):
@@ -327,3 +328,34 @@ def calculation_graph(loss, net, base_path):
     path = save_path / f'calculation_graph{now}'
 
     g.render(path, format='png', cleanup=True)
+
+
+## 최종 history, 학습된 parameter 저장 함수 (save_history_parameter)
+# 기능 : 최종 학습이 끝나고 history, paramter를 드라이브에 저장
+def save_history_parameter(history, parameter, base_path):
+    ## history 저장
+    # history 저장 폴더 경로
+    save_path = Path(base_path) / 'history'
+
+    # 폴더가 존재하지 않으면 생성
+    save_path.mkdir(parents=True, exist_ok=True)
+
+    # 현재 날짜와 시간 가져오기
+    now = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+
+    # history 저장 경로
+    path = save_path / f'history{now}'
+
+    # history 저장
+    np.save(path, history)
+
+
+    ## parameter 저장
+    # parameter 저장 폴더 경로
+    save_path = Path(base_path) / 'parameter'
+
+    # parameter 저장 경로
+    path = save_path / f'parameter{now}'
+
+    # paremeter 저장
+    torch.save(parameter, path)
