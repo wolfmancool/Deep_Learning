@@ -177,7 +177,7 @@ def evaluate_history(history, base_path):
 
     ## 이미지 파일을 드라이브에 저장
     # 이미지 저장 폴더 경로
-    save_path = base_path / 'learning_curve'
+    save_path = Path(base_path) / 'learning_curve'
 
     # 폴더가 존재하지 않으면 생성
     save_path.mkdir(parents=True, exist_ok=True)
@@ -314,7 +314,7 @@ def calculation_graph(loss, net, base_path):
 
     ## 손실 그래프 저장
     # 이미지 저장 폴더 경로
-    save_path = base_path / 'calculation_graph'
+    save_path = Path(base_path) / 'calculation_graph'
 
     # 폴더가 존재하지 않으면 생성
     save_path.mkdir(parents=True, exist_ok=True)
