@@ -354,6 +354,9 @@ def save_history_parameter(history, parameter, base_path):
     # parameter 저장 폴더 경로
     save_path = Path(base_path) / 'parameter'
 
+    # 폴더가 존재하지 않으면 생성
+    save_path.mkdir(parents=True, exist_ok=True)
+
     # parameter 저장 경로
     path = save_path / f'parameter{now}'
 
