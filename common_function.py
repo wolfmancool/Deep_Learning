@@ -332,7 +332,7 @@ def calculation_graph(loss, net, base_path):
 
 ## 최종 history, 학습된 parameter 저장 함수 (save_history_parameter)
 # 기능 : 최종 학습이 끝나고 history, paramter를 드라이브에 저장
-def save_history_parameter(history, parameter, base_path):
+def save_history_parameter(history, net, base_path):
     ## history 저장
     # history 저장 폴더 경로
     save_path = Path(base_path) / 'history'
@@ -361,4 +361,25 @@ def save_history_parameter(history, parameter, base_path):
     path = save_path / f'parameter{now}'
 
     # paremeter 저장
-    torch.save(parameter, path)
+    torch.save(net.state_dict(), path)
+
+
+## 드라이브에 저장된 history불러오는 함수 (load_history)
+# 기능 : 드라이브에 저장된 history를 불러오기
+def load_history(path):
+    history = np.laod(path)
+
+    return history
+
+
+## 드라이브에 저장된 학습된 parameter 불러오는 함수 (load_parameter)
+# 기능 : 드라이브에 저장된 학습된 parameter 불러오기
+def load_parameter(net, path, device):
+    ## 저장된 모델 파라미터 불러오기
+    state_dict = torch.load(path, map_location=device)
+
+    ## 모델에 파라미터 적용
+    net.load_state_dict(state_dict)
+
+    ## 파라미터가 적용된 모델 반환
+    return net
