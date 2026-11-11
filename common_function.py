@@ -307,3 +307,28 @@ def torch_seed(seed=123):
 
     torch.backends.cudnn.deterministic = True
     torch.use_deterministic_algorithms = True
+
+## 손실 계산 그래프 시각화 함수 (calculation_graph)
+# 기능 : 계산 그래프를 시각화 및 저장
+def calculation_graph(loss, net):
+    ## 손실 그래프 출력
+    g = make_dot(loss, params=dict(net.named_parameters()))
+    display(g)
+
+    ## 손실 그래프 저장
+    # 현재 작업 디렉토리 경로
+    base_path = Path.cwd()
+
+    # 이미지 저장 폴더 경로
+    save_path = base_path / 'calculation_graph'
+
+    # 폴더가 존재하지 않으면 생성
+    save_path.mkdir(parents=True, exist_ok=True)
+
+    # 현재 날짜와 시간 가져오기
+    now = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+
+    # 이미지 저장 경로
+    path = save_path / f'calculation_graph{now}'
+
+    g.render(path, format='png', cleanup=True)
