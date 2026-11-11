@@ -40,9 +40,9 @@ def eval_loss(loader, device, net, criterion):
     return loss
 
 
-## 학습함수 (fit) 정의
-# 기능 : 학습 + 검증 + epoch에 대한 훈련, 검증의 손실, 정확도 출력 + history기록
-def fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device, history):
+## 학습함수 (fit) 정의 => history저장 + 학습된 parameter저장
+# 기능 : 학습 + 검증 + epoch에 대한 훈련, 검증의 손실, 정확도 출력 + history기록 + history저장 + 학습된 parameter저장
+def fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device, history, base_path):
     ## 학습 시작 시점의 epoch (∵ 추가학습의 경우를 위해)
     base_epochs = len(history)
 
@@ -144,6 +144,7 @@ def fit(net, optimizer, criterion, num_epochs, train_loader, test_loader, device
         print(f'Epoch [{epoch+1}/{base_epochs+num_epochs}], loss: {avg_train_loss}, acc: {avg_train_acc}, val_loss: {avg_val_loss}, val_acc: {avg_val_acc}')
         item = np.array([epoch+1, avg_train_loss, avg_train_acc, avg_val_loss, avg_val_acc])
         history = np.vstack((history, item))
+    return history
 
 
 ## 학습곡선 출력함수 (evaluate_history)
