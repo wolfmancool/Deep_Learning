@@ -223,6 +223,8 @@ def fit(net, optimizer, criterion, num_epochs,
         ## 지정된 Epoch 간격마다 체크포인트 저장
         if (epoch + 1) % save_interval == 0:
             save_checkpoint(epoch + 1, net, optimizer, history, base_path)
+            # history만 따로 저장
+            # save_history()
 
     return history
 
