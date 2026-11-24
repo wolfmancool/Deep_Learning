@@ -269,7 +269,7 @@ def fit(model, optimizer, criterion, num_epochs,
     ## 모든 epoch가 종료된 후 최종 history 저장
     save_history(history, base_path)
 
-    return history
+    return
 
 
 # 4. evaluate_history : 학습곡선 출력함수
